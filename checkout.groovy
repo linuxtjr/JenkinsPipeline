@@ -7,7 +7,7 @@
 pipeline {
     agent any   // previously: agent { label 'Weblogic' }
     environment { // Global Environment Variables 
-        def dryRunOnTestServers = 'Y'                                     // Y || N to run on Production or Non-Production Sites
+        def dryRunOnTestServers = 'Y'                                     // 'N' to run on Production  AND  'Y' to run on Non-Production Sites
         int serverListBatchSize = 16                                      // Controls # of SITES that are proces sed in parallel
         def pathToServerList = 'SERVER_LIST_TXT'                          // Host should be split by whitespace. list should contain fully qualified domain names and IP addresses.
         def testServerRegex = /SERVER1|SERVER2|SERVER3|SERVER4|SERVER5/   // Define test servers to pass to Function getServerList()
