@@ -80,7 +80,7 @@ pipeline {
                         //DOING A BIT OF LINE COUNTING, FORMATTING / COMBINING HTML (Outlook is picky about missing HTML tags) & SENDING OUT THE EMAIL
                         def topOfHtmlBody = 'top.html',  middleOfHtmlBody = 'middle.html', bottomOfHtmlBody = 'bottom.html', completeHTMLReport = 'completeHTMLReport.html'
                         def errorLineCount = getLineCount(errorCheckOfHtmlBody)                           // FUNCTION: Gets the number of ERRROR lines in the file
-                        def summaryLineCount = getSummaryLineCount('ISSPeakCheckoutDetail.log')         // FUNCTION: Gets the number of sites processed by grabbing first column, sorting sites, then remove duplicates.
+                        def summaryLineCount = getUniqLineCount('ISSPeakCheckoutDetail.log')         // FUNCTION: Gets the number of sites processed by grabbing first column, sorting sites, then remove duplicates.
 
                         //def attachments = ["FILE.csv", "FILE.pdf", "IMAGE.png"]                 // Attach something to the email. separate additional filenames with a comma.
                         sortFileContents(errorCheckOfHtmlBody)  // Sort error_check.html because the contents coulld be out of order due to parallel execution completion times
@@ -196,9 +196,9 @@ def getLineCount(filePath) {
     return sh(script: "wc -l < ${filePath}", returnStdout: true).trim()
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
-//////////////////////////////////////////////////  getSummaryLineCount():  ////////////////////////////////////////////////////////////////////////////////////////////               
+//////////////////////////////////////////////////  getUniqLineCount():  ////////////////////////////////////////////////////////////////////////////////////////////               
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def getSummaryLineCount(filePath) {
+def getUniqLineCount(filePath) {
     return sh(script: "awk '{print \$1}' ${filePath} | sort | uniq | wc -l", returnStdout: true).trim()
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------     
