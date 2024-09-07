@@ -4,8 +4,8 @@ The environment utilizing this script has approximately 400 servers.</p>
 <p>Here is a comparison of average runtimes:</p>
 <table>
   <tr>
-      <th>Current Runtimes</th>
-      <th>Previous Runtimes</th>
+      <th>Current Run time</th>
+      <th>Previous Run time</th>
   </tr>
   <tr>
       <th><strong>4 minutes</strong></th>
