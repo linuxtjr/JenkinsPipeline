@@ -1,5 +1,6 @@
-body><h2><br>
-        Status Overview
+<h2><br>
+        Status Overview (Example)
+        Checkout Errors: 4
 <table>
         <tr>
       <th style="width: 11%;">Site</th>
@@ -32,7 +33,7 @@ body><h2><br>
             <td>Root process not running.</td>
         </tr>
     </table>
-<h2>Detailed Report</h2>
+<h2>Detailed Report - Server Processed: 4 </h2>
 <hr>
 <pre><div>
 SERVER1: PASS: Server Availability: 99%, No errors found
