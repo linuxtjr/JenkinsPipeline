@@ -11,7 +11,7 @@ pipeline {
         int serverListBatchSize = 16                                                            // Controls # of SITES that are proces sed in parallel
         def pathToServerList = 'SERVER_LIST_TXT'                                                // Host should be split by whitespace. list should contain fully qualified domain names and IP addresses.
         def testServerRegex = /SERVER1|SERVER2|SERVER3|SERVER4|SERVER5/                         // Define test servers to pass to Function getServerList()
-        def emailSubject = 'EMAIL_SUBJECT' ,                                                    // Add receipeint email address for report and subject line  
+        def emailSubject = 'EMAIL_SUBJECT'                                                      // Add receipeint email address for report and subject line  
         def emailAddress = 'EMAIL_ADDRESSES_HERE'
       
         // Variables Needed for Remote Host /////
