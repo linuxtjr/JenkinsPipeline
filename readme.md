@@ -36,25 +36,25 @@
 <hr>
 <pre><div>
 SERVER1: PASS: Server Availability: 99%, No errors found
-SERVER1: INFO: Server Availability: 99%, No errors found, vailability: 99%, No
+SERVER1: INFO: Server Availability: 99%, No errors found
 SERVER1: ERROR: Server Availability: 99%, No errors found
 SERVER1: PASS: Server Availability: 99%, No errors found
 </pre></div><hr>
 <pre><div>
 SERVER2: PASS: Server Availability: 99%, No errors found
-SERVER2: INFO: Server Availability: 99%, No errors found, vailability: 99%, No
+SERVER2: INFO: Server Availability: 99%, No errors found
 SERVER2: ERROR: Server Availability: 99%, No errors found
 SERVER2: PASS: Server Availability: 99%, No errors found
 </pre></div><hr>
     <pre><div>
 SERVER3: PASS: Server Availability: 99%, No errors found
-SERVER3: INFO: Server Availability: 99%, No errors found, vailability: 99%, No
+SERVER3: INFO: Server Availability: 99%, No errors found
 SERVER3: ERROR: Server Availability: 99%, No errors found
 SERVER3: PASS: Server Availability: 99%, No errors found
 </pre></div><hr>
     <pre><div>
 SERVER4: PASS: Server Availability: 99%, No errors found
-SERVER4: INFO: Server Availability: 99%, No errors found, vailability: 99%, No
+SERVER4: INFO: Server Availability: 99%, No errors found
 SERVER4: ERROR: Server Availability: 99%, No errors found
 SERVER4: PASS: Server Availability: 99%, No errors found
 </pre></div><hr>
