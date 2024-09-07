@@ -35,11 +35,11 @@ pipeline {
                       clearFiles(checkoutDetail,checkoutError,checkoutError)                                  // FUNCTION: Ensure log/html files are clear
                       echoConsoleMessage("Stage 'Build List of Sites' completed successfully")                // FUNCTION: print message in Jenkins Console. Used for debugging
         stage('Run Checkout on Sites') {
-            serverListSplitIntoBatches.each { batchOfServers ->             // Iterate each mapping of servers in batches e.g. if batch size is 16 and there are 400 server.
-                parallel batchOfServers.collectEntries { serverLine ->      // (PART-ONE) Iterate mapping of a single server batch, transforming serverLine into a unique key-value pair in a map.
-                    def serverDetails = tokenizeServerLine(serverLine)      // FUNCTION: Splits string into tokens; delimiter is whitespace
+            serverListSplitIntoBatches.each { batchOfServers ->                                               // Iterate each mapping of servers in batches e.g. if batch size is 16 and there are 400 server.
+                parallel batchOfServers.collectEntries { serverLine ->                                        // (PART-ONE) Iterate mapping of a single server batch, transforming serverLine into a unique key-value pair in a map.
+                    def serverDetails = tokenizeServerLine(serverLine)                                        // FUNCTION: Splits string into tokens; delimiter is whitespace
                     def (lowerDomain, upperDomain, consumesOPF) = [serverDetails.lowerDomain, serverDetails.upperDomain, serverDetails.consumesOPF] // Stores tokenizeServerLine returned values in defined variables
-                ["${lowerDomain}": {                                        // (PART-TWO) Mapping of a single site e.g. SERVER1 to everything after braces,creating a KEY|VALUE pair for each site and commands performed.
+                ["${lowerDomain}": {                                                                          // (PART-TWO) Mapping of a single site e.g. SERVER1 to everything after braces,creating a KEY|VALUE pair for each site and commands performed.
                     try {
                         def remoteCommandOutput = executeRemoteCommands(remoteUserName, lowerDomain, upperDomain, scriptLocal, scriptRemote, consumesOPF) // FUNCTION: Execute remote commands on Sites
                         def networkStatus = checkNetworkStatus()                                                                           // **IMPORTANT** Function checkNetworkStatus() MUST come after remoteCommnandOuput().
