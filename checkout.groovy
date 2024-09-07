@@ -51,7 +51,7 @@ pipeline {
                             def tempLog = splitAndStoreLogOutput(remoteCommandOutput, lowerDomain)                                        // FUNCTION: splits output, stores in files and variable
                              def (errorLog, summaryLog) = [tempLog.errorLog, tempLog.summaryLog]                                          // Store returned saveOutput() 
                             
-                            if (errorLog.size() > 0 && errorLog[0] != "") {
+                            if (errorLog.size() > 0) {
                                 wrapChunkOfTextInHtmlDivTags(summaryLog,summaryHTMLBody)
                                 def siteStatuses = getSiteStatuses(lowerDomain, summaryLog)                                                                                  // FUNCTION: Get site availability and active/inactive status
                                 generateHtmlErrorRows(errorHTMLBody, errorLog, lowerDomain, siteStatuses.siteAvailableStatus, siteStatuses.siteActiveStatus, networkStatus)  // FUNCTION: Create ERROR rows for site.
