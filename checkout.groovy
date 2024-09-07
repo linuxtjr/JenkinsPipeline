@@ -99,10 +99,10 @@ def getServerList(testServerRegex, filePath, dryRunOnTestServers) {
     return readFile(filePath)
         .readLines()
         .findAll { 
-            if (dryRunOnTestServers == 'Y') {
-                it =~ ${testServerRegex}  // NON-PRODUCTION: Use this for test servers
+            if (dryRunOnTestServers == 'N') {
+                !(it =~ ${testServerRegex}) // PRODUCTION: Exclude Test Servers
             } else {
-                !(it =~ ${testServerRegex}) // PRODUCTION: Exclude test servers
+                 it =~ ${testServerRegex}  // NON-PRODUCTION: Use this for Test servers
             }
         }
         //.take(10) // UNCOMMENT to limit number of servers for testing, e.g., .take(30) to process only 30 servers.
