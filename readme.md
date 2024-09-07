@@ -32,7 +32,7 @@
             <td>Root process not running.</td>
         </tr>
     </table>
-<h2>Detailed Report - Server Processed: 4 </h2>
+<h2>Detailed Report - Servers Processed: 4 </h2>
 <hr>
 <pre><div>
 SERVER1: PASS: Server Availability: 99%, No errors found
