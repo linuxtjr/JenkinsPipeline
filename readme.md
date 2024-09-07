@@ -58,3 +58,5 @@ SERVER4: INFO: Server Availability: 99%, No errors found
 SERVER4: ERROR: Server Availability: 99%, No errors found
 SERVER4: PASS: Server Availability: 99%, No errors found
 </pre></div><hr>
+
+<a href="page.html"><img src="checkout_example_image.png"></a>
