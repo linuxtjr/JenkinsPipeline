@@ -1,6 +1,5 @@
 <h2><br>
-        Status Overview (Example)
-        Checkout Errors: 4
+        Checkout Errors: 4 (Example)
 <table>
         <tr>
       <th style="width: 11%;">Site</th>
