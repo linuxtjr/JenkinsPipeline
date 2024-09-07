@@ -7,21 +7,25 @@
 pipeline {
     agent any   // previously: agent { label 'Weblogic' }
     environment { // Global Environment Variables 
-        def dryRunOnTestServers = 'Y'                                                           // Y || N to run on Production or Non-Production Sites
-        int serverListBatchSize = 16                                                            // Controls # of SITES that are proces sed in parallel
-        def pathToServerList = 'SERVER_LIST_TXT'                                                // Host should be split by whitespace. list should contain fully qualified domain names and IP addresses.
-        def testServerRegex = /SERVER1|SERVER2|SERVER3|SERVER4|SERVER5/                         // Define test servers to pass to Function getServerList()
-        def emailSubject = 'EMAIL_SUBJECT'                                                      // Add receipeint email address for report and subject line  
+        def dryRunOnTestServers = 'Y'                                     // Y || N to run on Production or Non-Production Sites
+        int serverListBatchSize = 16                                      // Controls # of SITES that are proces sed in parallel
+        def pathToServerList = 'SERVER_LIST_TXT'                          // Host should be split by whitespace. list should contain fully qualified domain names and IP addresses.
+        def testServerRegex = /SERVER1|SERVER2|SERVER3|SERVER4|SERVER5/   // Define test servers to pass to Function getServerList()
+        def emailSubject = 'EMAIL_SUBJECT'                                // Add receipeint email address for report and subject line  
         def emailAddress = 'EMAIL_ADDRESSES_HERE'
       
         // Variables Needed for Remote Host /////
-        def remoteUserName = 'REMOTE_USERNAME'                                                  // SSH and Rsync(encrypted) privileged username
-        def scriptRemote = '/tmp/DIR_NAME_HERE',      githubScriptPath = './DIR_NAME_HERE'      // Path for github script that will be remotely copied to Linux host. 
-        def errorLogPathRemotePath ='/tmp/ERROR.log', summaryLogRemotePath = '/tmp/SUMMARY.log' // Remote files path of log files
+        def remoteUserName = 'REMOTE_USERNAME'        // SSH and Rsync(encrypted) privileged username
+        def scriptRemote = '/tmp/DIR_NAME_HERE'       // Path to store script on remote server
+        def githubScriptPath = './DIR_NAME_HERE'      // Path of script that will be copied
+        def errorLogPathRemotePath ='/tmp/ERROR.log'  // Log path on remote host
+        def summaryLogRemotePath = '/tmp/SUMMARY.log' // Log path on remote host
 
         // Local Logs and Files Stored on Jenkins Node ////
-        def summaryLog = 'SUMMARY.log',               summaryHTMLBody = 'SUMMARY.html'          // Local files used by Jenkins Node
-        def errorLog = 'ERROR.log',                   errorHTMLBody = 'ERROR.html'              // Local files used by Jenkins Node
+        def errorLog = 'ERROR.log'
+        def summaryLog = 'SUMMARY.log'
+        def errorHTMLBody = 'ERROR.html' 
+        def summaryHTMLBody = 'SUMMARY.html' 
     }
     options { buildDiscarder(logRotator(numToKeepStr: '3')) }
     stages {
