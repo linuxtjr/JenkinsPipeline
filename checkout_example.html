@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Email Report</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 1px;
+            text-align: left;
+            border: 1px solid #dddddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .site-count {
+            display: flex; 
+            justify-content: end; 
+            float: right;
+        }
+        tr.spaceUnder>td {
+          padding-bottom: 1em;
+        }
+        .status-red {
+              color: red;
+        }
+        .status-green {
+              color: green;
+        }
+        .icon-error {
+              display: flex; 
+              justify-content: end; 
+              float: right;
+              width: 50px;
+              height: 35px;
+  	          background-size: cover;
+              background-repeat: no-repeat;
+              display: inline-block;
+  	          background-image: url("icon-errors.png")}
+        .icon-info {
+              display: flex; 
+              justify-content: end; 
+              float: right;
+              width: 55px;
+              height: 35px;
+  	          background-size: cover;
+              background-repeat: no-repeat;
+              display: inline-block;
+	            background-image: url("icon-info.png")}
+        .icon-pass {
+            display: flex; 
+            justify-content: end;
+            float: right;
+            width: 55px;
+            height: 35px;
+	          background-size: cover;
+            background-repeat: no-repeat;
+            display: inline-block;
+	          background-image: url("icon-passes.png")}
+    </style>
+</head>
+<body><h2><br>
+        Status Overview
+      <i class="site-count">0</i>
+      <i class="icon-info"></i>
+      <i class="site-count">4</i>
+      <i class="icon-error"></i>
+      <i class="site-count">390</i>
+      <i class="icon-pass"></i>
+    <hr>
+    </h2>
+
+    
+    <!-- First Table: Site Availability and Errors -->
+    <table>
+        <tr>
+      <th style="width: 11%;">Site</th>
+      <th style="width: 11%;">Network</th>
+      <th style="width: 11%;">Availability</th>
+      <th style="width: 67%;">Message</th>
+        </tr>
+        <tr>
+            <td>SERVER1</td>
+             <td class="status-green">Up</td>
+            <td class="status-red">Unavailable</td>
+            <td>Server Not Available</td>
+        </tr>
+        <tr>
+            <td>SERVER2</td>
+            <td class="status-green">Up</td>
+            <td class="status-green">Available</td>
+            <td>Disk Space Above 90%</td>
+        </tr>
+        <tr>
+            <td>SERVER3</td>
+            <td class="status-red">Down</td>
+            <td class="status-red">Unknown</td>
+            <td>Unable to connect to server. Check Network.</td>
+        </tr>
+        <tr>
+            <td>SERVER4</td>
+            <td class="status-green">Up</td>
+            <td class="status-green">Available</td>
+            <td>Root process not running.</td>
+        </tr>
+    </table>
+<br>
+<h2>Detailed Report</h2>
+<hr>
+<pre><div>
+SERVER1: PASS: Server Availability: 99%, No errors found
+SERVER1: INFO: Server Availability: 99%, No errors found, vailability: 99%, No
+SERVER1: ERROR: Server Availability: 99%, No errors found
+SERVER1: PASS: Server Availability: 99%, No errors found
+</pre></div><hr>
+<pre><div>
+SERVER2: PASS: Server Availability: 99%, No errors found
+SERVER2: INFO: Server Availability: 99%, No errors found, vailability: 99%, No
+SERVER2: ERROR: Server Availability: 99%, No errors found
+SERVER2: PASS: Server Availability: 99%, No errors found
+</pre></div><hr>
+    <pre><div>
+SERVER3: PASS: Server Availability: 99%, No errors found
+SERVER3: INFO: Server Availability: 99%, No errors found, vailability: 99%, No
+SERVER3: ERROR: Server Availability: 99%, No errors found
+SERVER3: PASS: Server Availability: 99%, No errors found
+</pre></div><hr>
+    <pre><div>
+SERVER4: PASS: Server Availability: 99%, No errors found
+SERVER4: INFO: Server Availability: 99%, No errors found, vailability: 99%, No
+SERVER4: ERROR: Server Availability: 99%, No errors found
+SERVER4: PASS: Server Availability: 99%, No errors found
+</pre></div><hr>
