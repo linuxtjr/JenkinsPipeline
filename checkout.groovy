@@ -3,9 +3,7 @@
 //////////////////////////////////////////////////   INFO: Parallel stages in Jenkins scripted pipelines            //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////   INFO: Function definitions are declared at bottom of page      //////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// TODO: Add Timeouts
-// TODO: Add 3rd stage('Rerun Checkout on Error Sites')
-// TODO: Finish Commenting/Notes
+// TODO: Add Timeouts, Finish Commenting/Notes, Add 3rd stage('Rerun Checkout on Error Sites')
 pipeline {
     agent any   // previously: agent { label 'Weblogic' }
     environment { // Global Environment Variables 
@@ -19,7 +17,7 @@ pipeline {
         def remoteUserName = 'REMOTE_USERNAME'                                                  // SSH and Rsync(encrypted) privileged username
         def scriptRemote = '/tmp/DIR_NAME_HERE',      githubScriptPath = './DIR_NAME_HERE'      // Path for github script that will be remotely copied to Linux host. 
         def errorLogPathRemotePath ='/tmp/ERROR.log', summaryLogRemotePath = '/tmp/SUMMARY.log' // Remote files path of log files
-      
+
         // Local Logs and Files Stored on Jenkins Node ////
         def summaryLog = 'SUMMARY.log',               summaryHTMLBody = 'SUMMARY.html'          // Local files used by Jenkins Node
         def errorLog = 'ERROR.log',                   errorHTMLBody = 'ERROR.html'              // Local files used by Jenkins Node
@@ -39,26 +37,21 @@ pipeline {
             serverListSplitIntoBatches.each { batchOfServers ->             // Iterate each mapping of servers in batches e.g. if batch size is 16 and there are 400 server.
                 parallel batchOfServers.collectEntries { serverLine ->      // (PART-ONE) Iterate mapping of a single server batch, transforming serverLine into a unique key-value pair in a map.
                     def serverDetails = tokenizeServerLine(serverLine)      // FUNCTION: Splits string into tokens; delimiter is whitespace
-                    def lowerDomain = serverDetails.lowerDomain             // Lower Domain Name e.g., SERVER1
-                    def upperDomain = serverDetails.upperDomain             // Upper Domain Name e.g., home.internal
-                    def consumesOPF = serverDetails.consumesOPF             // Checking for OPF Y or N
+                    def (lowerDomain, upperDomain, consumesOPF) = [serverDetails.lowerDomain, serverDetails.upperDomain, serverDetails.consumesOPF] // Stores tokenizeServerLine returned values in defined variables
                 ["${lowerDomain}": {                                        // (PART-TWO) Mapping of a single site e.g. SERVER1 to everything after braces,creating a KEY|VALUE pair for each site and commands performed.
                     try {
                         def remoteCommandOutput = executeRemoteCommands(remoteUserName, lowerDomain, upperDomain, scriptLocal, scriptRemote, consumesOPF) // FUNCTION: Execute remote commands on Sites
-                        def networkStatus = checkNetworkStatus()                                                                                          // **IMPORTANT** Function checkNetworkStatus() MUST come after remoteCommnandOuput().
-                                                                                                                                                          // checkNetworkStatus() function grabs the exit code and runs a check!
-                        //def outputData = storeOutput(remoteCommandOutput, lowerDomain, errorLog, summaryHTMLBody)                                       // FUNCTION: splits output, stores in files and variable
-                        //def errorLog = outputData.errorLog                                                                                              // Store returned saveOutput() 
-                        //def summaryHTMLBody = outputData.summaryHTMLBody                                                                                // Store returned saveOutput() 
-                        
+                        def networkStatus = checkNetworkStatus()                                                                           // **IMPORTANT** Function checkNetworkStatus() MUST come after remoteCommnandOuput().
+                                                                                                                                           // checkNetworkStatus() function grabs the exit code and runs a check!
                         if (networkStatus != 'Up') {
                             errorLog = 'ERROR: Something went wrong while using remote commands SCP/SSH. Check Network'                   // This assumes errorLog is empty because networkStatus check failed                                                 
                             generateHtmlErrorRows(errorHTMLBody, errorLog, lowerDomain, 'Unknown', 'Unknown', networkStatus)              // FUNCTION: Generates exactly ONE row for site in ERROR section.
-                          
-                      errorLog = storeOutput(remoteCommandOutput, lowerDomain,summaryHTMLBody)                                            // FUNCTION: splits output, stores in files and variable
                         } else {
-                            if (errorLog.size() > 0) {
-                                // Create variable that stores serverLine, create new stage to run only ERRORED sites, then store them using generateHTMLErrorRows()
+                            def tempLog = splitAndStoreLogOutput(remoteCommandOutput, lowerDomain)                                        // FUNCTION: splits output, stores in files and variable
+                             def (errorLog, summaryLog) = [tempLog.errorLog, tempLog.summaryLog]                                          // Store returned saveOutput() 
+                            
+                            if (errorLog.size() > 0 && errorLog[0] != "") {
+                                wrapChunkOfTextInHtmlDivTags(summaryLog,summaryHTMLBody)
                                 def siteStatuses = getSiteStatuses(lowerDomain, summaryLog)                                                                                  // FUNCTION: Get site availability and active/inactive status
                                 generateHtmlErrorRows(errorHTMLBody, errorLog, lowerDomain, siteStatuses.siteAvailableStatus, siteStatuses.siteActiveStatus, networkStatus)  // FUNCTION: Create ERROR rows for site.
                             }
@@ -175,16 +168,11 @@ def checkNetworkStatus() {
 //////////////////////////////////////////////////   delimiters ---OUTPUT1--- and ---OUTPUT2---, then stores  ////////////////////////////////////////////////////////////////////////////////////////////               
 //////////////////////////////////////////////////   each into separate variables and summary body of report  ////////////////////////////////////////////////////////////////////////////////////////////               
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def storeOutput(commandOutput, lowerDomain, summaryHTMLBody, errorLog) {
+def splitAndReturnLogOutput(commandOutput, lowerDomain) {
     def outputs = commandOutput.split(/---OUTPUT[12]---/)
     def errorLog = outputs.size() > 1 ? outputs[1]?.trim() : ''
-    def summaryHTMLBody = outputs.size() > 2 ? outputs[2]?.trim() : ''
-    
-    // Append output logs to files
-    sh(script: "echo \"${summaryHTMLBody}\" >> ${summaryHTMLBody}")
-    sh(script: "echo \"<hr><div><pre>${summaryHTMLBody}</pre></div><br>\" >> ${summaryHTMLBody}")
-    return "${errorLog}"
-    //return [errorLog: errorLog, summaryHTMLBody: summaryHTMLBody]
+    def summaryLog = outputs.size() > 2 ? outputs[2]?.trim() : ''
+    return [errorLog: errorLog, summaryLog: summaryLog]
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
 //////////////////////////////////////////////////   BELOW THESE COMMENTS START ALL FUNCTION DEFINITIONS!!  ////////////////////////////////////////////////////////////////////////////////////////////               
@@ -245,6 +233,17 @@ def generateHtmlErrorRows(errorHTMLBody, errorLog, lowerDomain, siteAvailableSta
     }
     sh(script: "echo '${htmlRows.join('\n').replace("'", "\\'")}' >> ${errorHTMLBody}")
 }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+//////////////////////////////////////////////////   sortFileContents(filePath) - Provide this function     ////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////   with a file and sort the lines in the file             ////////////////////////////////////////////////////////////////////////////////////////////
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def wrapChunkOfTextInHtmlDivTags(summaryLog,summaryHTMLBody) {
+    // Append output to HTML File
+    sh(script: "echo \"${summaryLog}\" >> ${summaryHTMLBody}")
+    sh(script: "echo \"<hr><div><pre>${summaryLog}</pre></div><br>\" >> ${summaryHTMLBody}")
+}
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
 //////////////////////////////////////////////////   sortFileContents(filePath) - Provide this function     ////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////   with a file and sort the lines in the file             ////////////////////////////////////////////////////////////////////////////////////////////
