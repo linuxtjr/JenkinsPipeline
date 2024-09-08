@@ -22,7 +22,7 @@ The environment utilizing this script has approximately 400 servers.</p>
 </ul>
 
 <p>By addressing these problems and optimizing the pipeline, the new solution is faster, more reliable, 
- excel ready and the code is easier to read (Work In Progress).</p>
+ excel ready and is easier to read (Work In Progress).</p>
 
 <hr>
 <h3>Example Report</h3>
