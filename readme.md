@@ -1,4 +1,4 @@
-<p>I'm going to start adding more projects I've completed to my Github. All PII has been removed to protect me and the company. This report is a solution I developed using <strong>Parallel Stages</strong> in Jenkins scripted pipelines, significantly improving run times.
+<p>This report is a solution I developed using <strong>Parallel Stages</strong> in Jenkins scripted pipelines, significantly improving run times.
 The environment utilizing this script has approximately 400 servers.</p>
 <hr>
 <p>Here is a comparison of average runtimes:</p>
