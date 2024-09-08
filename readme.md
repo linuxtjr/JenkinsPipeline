@@ -1,4 +1,4 @@
-<p>This report was developed in Groovy and utilizes <strong>Parallel Stages</strong> in Jenkins scripted pipelines, significantly improving build run times when compared to old script.
+<p>This report was developed in Groovy and utilizes <strong>Parallel Stages</strong> in Jenkins scripted pipelines, significantly improving run times when compared to old script.
 The environment utilizing this script has approximately 400 servers.</p>
 <hr>
 <p>Here is a comparison of average runtimes:</p>
