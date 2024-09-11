@@ -8,7 +8,7 @@ The environment utilizing this script has approximately 400 servers.</p>
       <th>Previous Run time</th>
   </tr>
   <tr>
-      <th><strong>4 minutes</strong></th>
+      <th><strong>< 4 minutes</strong></th>
       <th>20-30 Minutes</th>
   </tr>
 </table>
