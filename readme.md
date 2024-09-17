@@ -1,6 +1,8 @@
 <p>This report was developed in Groovy and utilizes <strong>Parallel Stages</strong> in Jenkins scripted pipelines, significantly improving run times when compared to the previous script.
 The environment utilizing this script has approximately 400 servers.</p>
 <hr>
+<p>Flow Chart</p>
+<img src="images/FlowChart.png" alt="Example Table" style="max-width: 100%; height: auto;">
 <p>Here is a comparison of average runtimes:</p>
 <table>
   <tr>
