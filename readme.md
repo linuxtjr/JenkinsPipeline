@@ -2,7 +2,7 @@
 The environment utilizing this script has approximately 400 servers.</p>
 <hr>
 <p>Flow Chart</p>
-<img src="images/FlowChart.png" alt="Example Table" style="max-width: 100%; height: auto;">
+<img src="images/flow_chart.png" alt="Flow Chart" style="max-width: 100%; height: auto;">
 <p>Here is a comparison of average runtimes:</p>
 <table>
   <tr>
