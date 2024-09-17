@@ -1,4 +1,4 @@
-<p><b>*** Work in-Progress: ***<b> <br>
+<p><b>*** Work in-Progress: <b> <br>
   <ul>* mFunction.groovy </ul> 
   <ul>* script.sh </ul>
   <hr>
