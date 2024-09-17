@@ -101,7 +101,7 @@ pipeline {
                 script {
                         try { /* This Block does some line counting, file fomatting and combining
                                 HTML (Outlook is picky about missing HTML tags) & SENDING OUT THE EMAIL */
-             		    HTMLReport = 'HTMLReport.html'                                                                            // Complete HTML File Name
+             		    HTMLReport = 'HTMLReport.html'                                                                    // Complete HTML File Name
                             def mFunctions = load './mFunctions.groovy'                                                       // Must Load mFunction.groovy Again for POST block.
                             def emailAddresses = params.EMAIL_ADDRESS.split('\n').collect { it.trim() }.finSITE { it }        // Address Parameter 
                             def formatEmailAddresses = emailAddresses.join(',')                                               // Address Parameter 
